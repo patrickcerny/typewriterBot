@@ -5,14 +5,24 @@ from selenium.webdriver.common.keys import Keys
 from pynput.keyboard import Controller, Key
 import keyboard
 import time
+import geckodriver_autoinstaller
+from webdriverdownloader import GeckoDriverDownloader
+
+#automatic Gecko Installer
+gdd = GeckoDriverDownloader()
+gdd.download_and_install()
+
 
 
 keyboardpy = Controller()
-print("SchreibtrainerBot by Patrick Cerny, Github: https://github.com/patrickcerny")
+
+#Info for User
+print("TypeWriterBot by Patrick Cerny, Github: https://github.com/patrickcerny")
 print()
 print("Hello User!\nThis is a warning! This application has to use your typetrainer username and password! "+
   "The credentials will not be saved in any way. They serve for login purpose only. " +
   "Do you want to continue) (y/n)")
+  
 answer = input().strip().lower()
 
 if answer == "n":
