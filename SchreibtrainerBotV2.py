@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 from selenium import webdriver
@@ -22,7 +23,7 @@ print()
 print("Hello User!\nThis is a warning! This application has to use your typetrainer username and password! "+
   "The credentials will not be saved in any way. They serve for login purpose only. " +
   "Do you want to continue) (y/n)")
-  
+
 answer = input().strip().lower()
 
 if answer == "n":
