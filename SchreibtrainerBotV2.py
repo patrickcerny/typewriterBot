@@ -22,9 +22,9 @@ if answer == "n":
 
 
 print("Please Enter your Username:")
-username = "alissa1mo"
+username = input()
 print("Please enter your Password")
-password = "7804"
+password = input()
 
 
 #driver object initialisation and opening Firefox
