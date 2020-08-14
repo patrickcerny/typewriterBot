@@ -20,7 +20,7 @@ errorList = [
 def Exit(Error, errorMessage):
     if Error:
         print("Error! something went wrong!")
-        print("Error Message: " + errorMessage)
+        print("Error Message: " + str(errorMessage))
 
     print("Press any key to exit!")
     input()
@@ -53,7 +53,7 @@ def Login():
     try:
       driver.get("https://at4.typewriter.at/index.php?r=site/index")
     except Exception as e:
-      Exit(True, str(e))
+      Exit(True, e)
 
 
     
@@ -63,41 +63,39 @@ def Login():
       formLogin_un = driver.find_element_by_id("LoginForm_username")
       formLogin_pw = driver.find_element_by_id("LoginForm_pw")
       formLogin_submit = driver.find_element_by_name("yt0")
-    except Exception as e:
-      Exit(True, str(e))
-
-      
     
-
     # paste in user-credentials
-    formLogin_un.send_keys(username)
-    formLogin_pw.send_keys(password)
-    formLogin_submit.click()
+      formLogin_un.send_keys(username)
+      formLogin_pw.send_keys(password)
+      formLogin_submit.click()
+    except Exception as e:
+      Exit(True, e)
 
     time.sleep(1)
 
-    # opens link to next lesson
-    linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
-    linkToLesson.click()
+
     return driver
 
+def NextLesson(driver):
+  # opens link to next lesson
+  linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
+  linkToLesson.click()
+
 # function for doing an excercise on typewriter
-
-
 def DoExcercise(driver):
 
     time.sleep(1)
+    # gets first char of text
     try:
-      # gets first char of text
       currentChar = driver.find_element_by_id("actualLetter").text
     except Exception as e:
-      Exit(True, str(e))
+      Exit(True, e)
     
     # starts the lesson
     keyboardpy.press(Keys.ENTER)
     time.sleep(0.5)
-    # types the first char again for update of #remainingText
 
+    # types the first char again for update of #remainingText
     keyboardpy.press(currentChar)
 
     # gets remaining text + currentchar
@@ -105,8 +103,8 @@ def DoExcercise(driver):
       remainingText = driver.find_element_by_id("remainingText").text
       currentChar = driver.find_element_by_id("actualLetter").text
     except Exception as e:
-      Exit(True, str(e))
-      
+      Exit(True, e)
+
     # types the 2nd char
     time.sleep(0.5)
     keyboardpy.press(currentChar)
@@ -118,6 +116,22 @@ def DoExcercise(driver):
         keyboardpy.press(char)
         time.sleep(60/int(answerSpeed))
 
+def GotoHomescreen():
+
+  try:
+    if answerBrowser == "f":
+      driver = webdriver.Firefox()
+    elif answerBrowser == "c":
+      driver = webdriver.Chrome("driver\chromedriver.exe")
+    elif answerBrowser == "e":
+      driver = webdriver.Edge("driver\msedgedriver.exe")
+    else:
+      Exit(True, errorList[0])
+
+    driver.get("https://at4.typewriter.at/index.php?r=user/overview")
+    return driver  
+  except Exception as e:
+    Exit(True, e)
 
 print(".")
 print(".")
@@ -127,41 +141,55 @@ print(".")
 print(".")
 print(".")
 
-print("What Browser do you use? (Firefox: F | Chrome: C | Edge: E")
+# choosing of browser
+print("What Browser do you use? (Firefox: F | Chrome: C | Edge: E)")
 answerBrowser = input().strip().lower()
 if answerBrowser != "e" and answerBrowser != "f" and answerBrowser != "c":
     Exit(True, errorList[0])
 
-
-print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
-answer = input().strip().lower()
-
+# assignment of typespeed 
 print("What speed to you want to type in? (f. e. 300 => 300 chars / min - [It will always finish a bit less then the amount you type in!])")
-
-
 try:
   answerSpeed = int(input())
 except Exception as e:
-  Exit(True, str(e))
-  
-  
-  
+  Exit(True, e)
 
-
+# login or excercise
+print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
+answer = input().strip().lower()
 if answer == "l":
-    driver = Login()
+  print("How many excercises do you want to do? (1 to How-Many-You-Want)")
+  try:
+    timesExcercise = int(input())
+  except Exception as e:
+    Exit(True, e)
 
+  driver = Login()
+  for i in range(timesExcercise):
+    NextLesson(driver)
     DoExcercise(driver)
+    
+
+
 elif answer == "e":
     print("Please provide the URL of the excercise:")
     url = input()
-
-    if answerBrowser == "f":
-        driver = webdriver.Firefox()
-    elif answerBrowser == "c":
-        driver = webdriver.Chrome(".\driver\chromedriver.exe")
-    elif answerBrowser == "e":
-        driver = webdriver.Edge(".\driver\msedgedriver.exe")
-
-    driver.get(url)
+    try:
+      if answerBrowser == "f":
+          driver = webdriver.Firefox()
+      elif answerBrowser == "c":
+          driver = webdriver.Chrome(".\driver\chromedriver.exe")
+      elif answerBrowser == "e":
+          driver = webdriver.Edge(".\driver\msedgedriver.exe")
+    except Exception as e:
+      Exit(True, e)
+    
+    try:
+      driver.get(url)
+    except Exception as e:
+      Exit(True, e)
+    
     DoExcercise(driver)
+else:
+  Exit(True, errorList[0])
+
