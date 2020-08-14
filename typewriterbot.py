@@ -124,12 +124,9 @@ def DoExcercise(driver):
         keyboardpy.press(char)
         time.sleep(60/int(answerSpeed))
 
-<<<<<<< Updated upstream
-=======
 def GotoHomescreen(driver):
   driver.get("https://at4.typewriter.at/index.php?r=user/overview")
   time.sleep(5)
->>>>>>> Stashed changes
 
 print(".")
 print(".")
