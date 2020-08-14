@@ -7,11 +7,7 @@ import keyboard
 import time
 import geckodriver_autoinstaller
 from webdriverdownloader import GeckoDriverDownloader
-
-#automatic Gecko Installer
-gdd = GeckoDriverDownloader()
-gdd.download_and_install()
-
+from webdriverdownloader import ChromeDriverDownloader
 
 keyboardpy = Controller()
 
@@ -34,11 +30,11 @@ def Login():
   password = input()
 
   if answerBrowser == "f":
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(".\driver\geckodriver.exe")
   elif answerBrowser == "c":
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(".\driver\chromedriver.exe")
   elif answerBrowser == "e":
-    driver = webdriver.Edge() 
+    driver = webdriver.Edge(".\driver\msedgedriver.exe") 
     
   driver.get("https://at4.typewriter.at/index.php?r=site/index")
 
@@ -52,6 +48,8 @@ def Login():
   formLogin_pw.send_keys(password)
   formLogin_submit.click()
 
+  time.sleep(1)
+
   #open link to next lesson
   linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
   linkToLesson.click()
@@ -59,6 +57,8 @@ def Login():
 
 #function for doing an excercise on typewriter
 def DoExcercise(driver):
+
+  time.sleep(1)
 
   #gets first char of text
   currentChar = driver.find_element_by_id("actualLetter").text
@@ -80,7 +80,7 @@ def DoExcercise(driver):
   #types every char in the remaining Text
   for char in remainingText:
       keyboardpy.press(char)
-      time.sleep(0.15)
+      time.sleep(0.05)
 
 
       
@@ -113,11 +113,11 @@ elif answer == "e":
     url = input()
 
     if answerBrowser == "f":
-      driver = webdriver.Firefox()
+      driver = webdriver.Firefox(".\driver\geckodriver.exe")
     elif answerBrowser == "c":
-      driver = webdriver.Chrome()
+      driver = webdriver.Chrome(".\driver\chromedriver.exe")
     elif answerBrowser == "e":
-      driver = webdriver.Edge()  
+      driver = webdriver.Edge(".\driver\msedgedriver.exe")  
     
     driver.get(url)
     DoExcercise(driver)
