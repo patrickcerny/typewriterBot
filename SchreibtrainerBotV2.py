@@ -10,7 +10,6 @@ from webdriverdownloader import GeckoDriverDownloader
 from webdriverdownloader import ChromeDriverDownloader
 
 keyboardpy = Controller()
-
 #function for loggin into an account and starting the newest lesson
 def Login():
   print("Hello User!\nThis is a warning! This application has to use your typetrainer username and password! "+
@@ -20,7 +19,7 @@ def Login():
 
   if answer == "n":
       sys.exit()
-  
+   
 
 
 
@@ -30,11 +29,11 @@ def Login():
   password = input()
 
   if answerBrowser == "f":
-    driver = webdriver.Firefox(".\driver\geckodriver.exe")
+    driver = webdriver.Firefox()
   elif answerBrowser == "c":
-    driver = webdriver.Chrome(".\driver\chromedriver.exe")
+    driver = webdriver.Chrome("driver\chromedriver.exe")
   elif answerBrowser == "e":
-    driver = webdriver.Edge(".\driver\msedgedriver.exe") 
+    driver = webdriver.Edge("driver\msedgedriver.exe") 
     
   driver.get("https://at4.typewriter.at/index.php?r=site/index")
 
@@ -80,7 +79,7 @@ def DoExcercise(driver):
   #types every char in the remaining Text
   for char in remainingText:
       keyboardpy.press(char)
-      time.sleep(0.05)
+      time.sleep(60/int(answerSpeed))
 
 
       
@@ -100,6 +99,9 @@ if answerBrowser != "e" and answerBrowser != "f" and answerBrowser != "c":
 
 print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
 answer = input().strip().lower()
+
+print("What speed to you want to type in? (f. e. 300 => 300 chars / min)")
+answerSpeed = input()
 
 
 
