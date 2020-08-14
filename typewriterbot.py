@@ -88,25 +88,30 @@ def DoExcercise(driver):
 
     time.sleep(1)
     try:
-      
+      # gets first char of text
+      currentChar = driver.find_element_by_id("actualLetter").text
     except Exception as e:
-      
-    # gets first char of text
-    currentChar = driver.find_element_by_id("actualLetter").text
-
+      Exit(True, str(e))
+    
     # starts the lesson
     keyboardpy.press(Keys.ENTER)
     time.sleep(0.5)
     # types the first char again for update of #remainingText
+
     keyboardpy.press(currentChar)
 
     # gets remaining text + currentchar
-    remainingText = driver.find_element_by_id("remainingText").text
-    currentChar = driver.find_element_by_id("actualLetter").text
-
+    try:
+      remainingText = driver.find_element_by_id("remainingText").text
+      currentChar = driver.find_element_by_id("actualLetter").text
+    except Exception as e:
+      Exit(True, str(e))
+      
     # types the 2nd char
     time.sleep(0.5)
     keyboardpy.press(currentChar)
+
+
 
     # types every char in the remaining Text
     for char in remainingText:
