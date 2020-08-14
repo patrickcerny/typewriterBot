@@ -1,3 +1,0 @@
-[0814/234712.240:ERROR:process_info.cc(329)] VirtualQueryEx: Zugriff verweigert (0x5)
-[0814/234712.240:ERROR:process_info.cc(556)] ReadMemoryInfo failed
-[0814/234712.241:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Es wurde versucht, auf einen Prozess zuzugreifen, der gerade beendet wurde. (0xc000010a)

@@ -7,7 +7,10 @@ import keyboard
 import time
 import geckodriver_autoinstaller
 from webdriverdownloader import GeckoDriverDownloader
-from webdriverdownloader import ChromeDriverDownloader
+
+gdd = GeckoDriverDownloader()
+gdd.download_and_install()
+
 
 keyboardpy = Controller()
 
