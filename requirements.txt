@@ -2,7 +2,9 @@ astroid==2.4.2
 beautifulsoup4==4.9.1
 certifi==2020.6.20
 chardet==3.0.4
+chromedriver-autoinstaller==0.2.2
 colorama==0.4.3
+geckodriver-autoinstaller==0.1.0
 idna==2.10
 isort==4.3.21
 keyboard==0.13.5
@@ -15,6 +17,8 @@ selenium==3.141.0
 six==1.15.0
 soupsieve==2.0.1
 toml==0.10.1
+tqdm==4.48.2
 typed-ast==1.4.1
 urllib3==1.25.10
+webdriverdownloader==1.1.0.3
 wrapt==1.12.1
