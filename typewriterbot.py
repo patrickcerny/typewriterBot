@@ -52,6 +52,9 @@ def Login():
 
     try:
       driver.get("https://at4.typewriter.at/index.php?r=site/index")
+      driver.minimize_window()
+      driver.maximize_window()
+      
     except Exception as e:
       Exit(True, str(e))
 
@@ -118,6 +121,12 @@ def DoExcercise(driver):
         keyboardpy.press(char)
         time.sleep(60/int(answerSpeed))
 
+<<<<<<< Updated upstream
+=======
+def GotoHomescreen(driver):
+  driver.get("https://at4.typewriter.at/index.php?r=user/overview")
+  time.sleep(5)
+>>>>>>> Stashed changes
 
 print(".")
 print(".")
@@ -147,6 +156,26 @@ except Exception as e:
   
   
 
+<<<<<<< Updated upstream
+=======
+# login or excercise
+print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
+answer = input().strip().lower()
+if answer == "l":
+  print("How many excercises do you want to do? (1 to How-Many-You-Want)")
+  try:
+    timesExcercise = int(input())
+  except Exception as e:
+    Exit(True, e)
+
+  driver = Login()
+  for i in range(timesExcercise):
+    NextLesson(driver)
+    DoExcercise(driver)
+    time.sleep(5)
+    GotoHomescreen(driver)
+    
+>>>>>>> Stashed changes
 
 if answer == "l":
     driver = Login()
@@ -155,6 +184,29 @@ if answer == "l":
 elif answer == "e":
     print("Please provide the URL of the excercise:")
     url = input()
+<<<<<<< Updated upstream
+=======
+    try:
+      if answerBrowser == "f":
+          driver = webdriver.Firefox()
+      elif answerBrowser == "c":
+          driver = webdriver.Chrome(".\driver\chromedriver.exe")
+      elif answerBrowser == "e":
+          driver = webdriver.Edge(".\driver\msedgedriver.exe")
+    except Exception as e:
+      Exit(True, e)
+    
+    try:
+      driver.get(url)
+      driver.maximize_window()
+      driver.switch_to.window(driver.current_window_handle)
+    except Exception as e:
+      Exit(True, e)
+    
+    DoExcercise(driver)
+else:
+  Exit(True, errorList[0])
+>>>>>>> Stashed changes
 
     if answerBrowser == "f":
         driver = webdriver.Firefox()
