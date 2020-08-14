@@ -82,11 +82,15 @@ def Login():
 
     time.sleep(1)
 
-    # opens link to next lesson
-    linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
-    linkToLesson.click()
+    
     return driver
 
+
+def NextLesson(driver):
+  # opens link to next lesson
+  time.sleep(2)
+  linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
+  linkToLesson.click()
 # function for doing an excercise on typewriter
 
 
@@ -153,14 +157,6 @@ try:
 except Exception as e:
   Exit(True, str(e))
   
-  
-  
-
-<<<<<<< Updated upstream
-=======
-# login or excercise
-print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
-answer = input().strip().lower()
 if answer == "l":
   print("How many excercises do you want to do? (1 to How-Many-You-Want)")
   try:
@@ -175,7 +171,6 @@ if answer == "l":
     time.sleep(5)
     GotoHomescreen(driver)
     
->>>>>>> Stashed changes
 
 if answer == "l":
     driver = Login()
@@ -184,8 +179,6 @@ if answer == "l":
 elif answer == "e":
     print("Please provide the URL of the excercise:")
     url = input()
-<<<<<<< Updated upstream
-=======
     try:
       if answerBrowser == "f":
           driver = webdriver.Firefox()
@@ -206,14 +199,13 @@ elif answer == "e":
     DoExcercise(driver)
 else:
   Exit(True, errorList[0])
->>>>>>> Stashed changes
 
-    if answerBrowser == "f":
-        driver = webdriver.Firefox()
-    elif answerBrowser == "c":
-        driver = webdriver.Chrome(".\driver\chromedriver.exe")
-    elif answerBrowser == "e":
-        driver = webdriver.Edge(".\driver\msedgedriver.exe")
+  if answerBrowser == "f":
+      driver = webdriver.Firefox()
+  elif answerBrowser == "c":
+      driver = webdriver.Chrome(".\driver\chromedriver.exe")
+  elif answerBrowser == "e":
+      driver = webdriver.Edge(".\driver\msedgedriver.exe")
 
-    driver.get(url)
-    DoExcercise(driver)
+  driver.get(url)
+  DoExcercise(driver)
