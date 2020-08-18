@@ -88,7 +88,7 @@ def Login():
 
 def NextLesson(driver):
   # opens link to next lesson
-  time.sleep(2)
+  time.sleep(1)
   linkToLesson = driver.find_element_by_class_name("cockpitStartButton")
   linkToLesson.click()
 # function for doing an excercise on typewriter
@@ -150,8 +150,6 @@ print("Do you want to login and do your next Exercise or just do a Excercise wit
 answer = input().strip().lower()
 
 print("What speed to you want to type in? (f. e. 300 => 300 chars / min - [It will always finish a bit less then the amount you type in!])")
-
-
 try:
   answerSpeed = int(input())
 except Exception as e:
@@ -168,14 +166,9 @@ if answer == "l":
   for i in range(timesExcercise):
     NextLesson(driver)
     DoExcercise(driver)
-    time.sleep(5)
+    time.sleep(1)
     GotoHomescreen(driver)
     
-
-if answer == "l":
-    driver = Login()
-
-    DoExcercise(driver)
 elif answer == "e":
     print("Please provide the URL of the excercise:")
     url = input()
@@ -200,12 +193,6 @@ elif answer == "e":
 else:
   Exit(True, errorList[0])
 
-  if answerBrowser == "f":
-      driver = webdriver.Firefox()
-  elif answerBrowser == "c":
-      driver = webdriver.Chrome(".\driver\chromedriver.exe")
-  elif answerBrowser == "e":
-      driver = webdriver.Edge(".\driver\msedgedriver.exe")
 
-  driver.get(url)
-  DoExcercise(driver)
+print("Thank you for using my bot! If you have any feedback, please contact me over my github https://github.com/patrickcerny")
+
