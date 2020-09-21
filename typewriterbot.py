@@ -8,10 +8,7 @@ import time
 import geckodriver_autoinstaller
 from webdriverdownloader import GeckoDriverDownloader
 
-enumerate RE = {
-    
-}
-gdd = GeckoDriverDownloader()
+ckoDriverDownloader()
 gdd.download_and_install()
 
 
