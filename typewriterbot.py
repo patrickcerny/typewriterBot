@@ -8,7 +8,7 @@ import time
 import geckodriver_autoinstaller
 from webdriverdownloader import GeckoDriverDownloader
 
-ckoDriverDownloader()
+gdd = GeckoDriverDownloader()
 gdd.download_and_install()
 
 
