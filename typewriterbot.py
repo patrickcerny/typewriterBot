@@ -135,6 +135,7 @@ def GotoHomescreen(driver):
 print(".")
 print(".")
 print(".")
+print(".")
 print("TypeWriterBot by Patrick Cerny, Github: https://github.com/patrickcerny")
 print(".")
 print(".")
