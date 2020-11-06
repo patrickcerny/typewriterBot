@@ -15,7 +15,7 @@ gdd.download_and_install()
 keyboardpy = Controller()
 
 errorList = [
-    "Invalid Argument",
+    "Invalid Arguments",
     "connection refused, check internet connection"
 ]
 
