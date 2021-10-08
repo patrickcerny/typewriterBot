@@ -150,7 +150,7 @@ if answerBrowser != "e" and answerBrowser != "f" and answerBrowser != "c":
 print("Do you want to login and do your next Exercise or just do a Excercise without login? (Login: L | Excerice: E)")
 answer = input().strip().lower() 
 
-print("What speed to you want to type in? (f. e. 300 => 300 chars / min - [It will always finish a bit less then the amount you type in!])")
+print("What speed to you want to type in? (f. e. 300 => 300 chars / min - [It will always finish a bit slower then the speed you type in!])")
 try:
   answerSpeed = int(input())
 except Exception as e:
@@ -175,7 +175,7 @@ elif answer == "e":
     url = input()
     try:
       if answerBrowser == "f":
-          driver = webdriver.Firefox()
+          driver = webdriver.Firefox(".\driver\geckodriver.exe")
       elif answerBrowser == "c":
           driver = webdriver.Chrome(".\driver\chromedriver.exe")
       elif answerBrowser == "e":
