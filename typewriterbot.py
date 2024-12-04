@@ -1,87 +1,26 @@
-import sys
-from selenium import webdriver
+import time
+
+#selenium imports
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.firefox.service import Service as FirefoxService
+
 from selenium.webdriver.edge.service import Service as EdgeService
-from pynput.keyboard import Controller
-import time
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.webdriver import WebDriver
-from webdriver_manager.chrome import ChromeDriverManager
+
+
+#keyboard input
+from pynput.keyboard import Controller
+
+#own imports
+from files.errors import errorList
+from files.functions import Exit
+from files.functions import GetChromeDriver
+from files.functions import NextLesson
+from files.functions import LoginUser
+
 
 keyboardpy = Controller()
-
-errorList = [
-    "Invalid Arguments",
-    "Connection refused, check internet connection"
-]
-
-def Exit(Error, errorMessage):
-    if Error:
-        print("Error! Something went wrong!")
-        print("Error Message: " + errorMessage)
-    print("Press Enter to exit.")
-    input()
-    sys.exit(0)
-
-def Login():
-    print(
-        "Hello User!\nThis is a warning! This application has to use your typetrainer username and password! "
-        "The credentials will not be saved in any way. They serve for login purposes only.\n"
-        "Do you want to continue? (y/n)"
-    )
-    answer = input().strip().lower()
-
-    if answer == "n":
-        Exit(False, "")
-
-    print("Please Enter your Username:")
-    username = input().strip()
-    print("Please Enter your Password:")
-    password = input().strip()
-
-    if answerBrowser == "f":
-        driver = webdriver.Firefox(service=FirefoxService(executable_path="./driver/geckodriver"))
-    elif answerBrowser == "c":
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    elif answerBrowser == "e":
-        driver = webdriver.Edge(service=EdgeService("./driver/msedgedriver"))
-    else:
-        Exit(True, errorList[0])
-
-    try:
-        driver.get("https://at4.typewriter.at/index.php?r=site/index")
-        driver.maximize_window()
-        time.sleep(1)
-    except Exception as e:
-        Exit(True, str(e))
-
-    try:
-        formLogin_un = driver.find_element(By.ID, "LoginForm_username")
-        formLogin_pw = driver.find_element(By.ID, "LoginForm_pw")
-        formLogin_submit = driver.find_element(By.NAME, "yt0")
-    except Exception as e:
-        Exit(True, str(e))
-
-    time.sleep(1)   
-
-    formLogin_un.send_keys(username)
-    formLogin_pw.send_keys(password)
-    formLogin_submit.click()
-
-    time.sleep(1)
-    return driver
-
-def NextLesson(driver):
-    time.sleep(1)
-    try:
-        linkToLesson = driver.find_element(By.CLASS_NAME, "cockpitStartButton")
-        linkToLesson.click()
-    except Exception as e:
-        Exit(True, str(e))
 
 def DoExercise(driver):
     keyboardpy.press(Keys.ENTER)
@@ -101,8 +40,14 @@ def DoExercise(driver):
     keyboardpy.press(currentChar)
     time.sleep(2.5)
 
-    amountRemaining = driver.find_element(By.ID, "amountRemaining").text
-    remainingInt = int(amountRemaining)
+    amountRemaining: int = 0
+
+    #try to find the remaining inputs after the first input
+    try:
+        amountRemaining = driver.find_element(By.ID, "amountRemaining").text
+        remainingInt = int(amountRemaining)
+    except Exception as e:
+        Exit(True, str(e))
 
     while remainingInt > 0:
         # Locate the input box
@@ -146,7 +91,7 @@ if answer == "l":
     except Exception as e:
         Exit(True, str(e))
 
-    driver = Login()
+    driver = LoginUser()
     for _ in range(timesExercise):
         NextLesson(driver)
         DoExercise(driver)
@@ -156,20 +101,10 @@ if answer == "l":
 elif answer == "e":
     print("Please provide the URL of the exercise:")
     url = input().strip()
-    try:
-        if answerBrowser == "f":
-            driver = webdriver.Firefox(service=FirefoxService(executable_path="./driver/geckodriver"))
-        elif answerBrowser == "c":
-            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        elif answerBrowser == "e":
-            driver = webdriver.Edge(service=EdgeService("./driver/msedgedriver"))
-        else:
-            Exit(True, errorList[0])
+    driver = GetChromeDriver();
 
-        driver.get(url)
-        driver.maximize_window()
-    except Exception as e:
-        Exit(True, str(e))
+    driver.get(url)
+    driver.maximize_window()
 
     DoExercise(driver)
 else:
