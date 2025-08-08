@@ -1,29 +1,49 @@
-# typewriterBot
-### A typing Bot for the learing website https://at4.typewriter.at/
+# TypeWriterBot
 
-This bot is 100% made in python. It's based on selenium and pynput.
+Automates typing exercises on [TypeWriter](https://at4.typewriter.at/) using Selenium.
 
-### This is how you use it:
+## Installation
 
-First, download Python (at vleast 3.7). After that install pip (at least v20.2.2).
-After installing both properly, install all modules needed by:
+1. Install Python 3.8+ and [pip](https://pip.pypa.io/en/stable/).
+2. Install runtime dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. (Optional) Install development dependencies:
+   ```bash
+   pip install -r requirements-dev.txt
+   ```
 
-**pip install -r requirements.txt**
+## Usage
 
-After successfully instally all packages, start the typewriterbot.py by typing:
+The CLI is available as a module or console script.
 
-**py typewriterbot.py**
+### Run exercises after login
 
-Make sure that you have installed at least **one** of these four browser:
+Set the environment variables `TWB_USERNAME` and `TWB_PASSWORD` and run:
 
-- Firefox
-- Chrome
-- Edge **(The new version, not the standard one)**
+```bash
+python -m typewriterbot --browser c --speed 300 login --times 2
+```
 
-After loading, the browser window should open itself, maximize and the lection will be done.
-If the Browser window does not open, check if a window was opened and not focused. If yes, click the window / focus it.
-After clicking on the browser window, **do NOT click any other window. A misclick will have fatal consequences.**
-The window will close by itself after the lection is finished.
+### Run a single exercise by URL
 
-### Important notes
-This version does only work on windows.
+```bash
+python -m typewriterbot --browser f --speed 250 exercise https://example.com/exercise
+```
+
+Supported browsers: Firefox (`f`), Chrome (`c`), and Edge (`e`).
+
+## Development
+
+Format and lint the codebase using [pre-commit](https://pre-commit.com/):
+
+```bash
+pre-commit run --files typewriterbot/bot.py typewriterbot/cli.py
+```
+
+Run the tests with [pytest](https://pytest.org/):
+
+```bash
+pytest
+```
