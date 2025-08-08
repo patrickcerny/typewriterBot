@@ -4,12 +4,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.chrome import ChromeDriverManager
 from pynput.keyboard import Controller
 import time
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.webdriver import WebDriver
-from webdriver_manager.chrome import ChromeDriverManager
 from bot import exit_with_message
 
 keyboardpy = Controller()

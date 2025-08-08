@@ -2,21 +2,13 @@ import sys
 
 
 def exit_with_message(error: bool, error_message: str = "") -> None:
-    """Print an optional error message and exit.
+    """Print an optional message and exit with an appropriate status code.
 
-    If *error* is truthy, the message is treated as an error and the process
-    terminates with a status code of ``1``. Otherwise the process exits with
-    status code ``0``. The previous implementation waited for user input before
-    exiting which caused automated environments to hang; that behaviour has been
-    removed.
+    When *error* is ``True`` the message, if provided, is written to stderr and
+    the process exits with status code ``1``.  For non-error exits the message is
+    written to stdout and the process terminates with status code ``0``.
     """
-    if error:
-        print("Error! Something went wrong!")
-        if error_message:
-            print("Error Message: " + error_message)
-        sys.exit(1)
-    sys.exit(0)
-
-
-if __name__ == "__main__":
-    exit_with_message(True, "This module is not intended to be executed directly.")
+    if error_message:
+        stream = sys.stderr if error else sys.stdout
+        print(error_message, file=stream)
+    sys.exit(1 if error else 0)
