@@ -1,4 +1,3 @@
-import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -11,6 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.webdriver import WebDriver
 from webdriver_manager.chrome import ChromeDriverManager
+from bot import exit_with_message
 
 keyboardpy = Controller()
 
@@ -19,13 +19,6 @@ errorList = [
     "Connection refused, check internet connection"
 ]
 
-def Exit(Error, errorMessage):
-    if Error:
-        print("Error! Something went wrong!")
-        print("Error Message: " + errorMessage)
-    print("Press Enter to exit.")
-    input()
-    sys.exit(0)
 
 def Login():
     print(
@@ -36,7 +29,7 @@ def Login():
     answer = input().strip().lower()
 
     if answer == "n":
-        Exit(False, "")
+        exit_with_message(False)
 
     print("Please Enter your Username:")
     username = input().strip()
@@ -50,21 +43,21 @@ def Login():
     elif answerBrowser == "e":
         driver = webdriver.Edge(service=EdgeService("./driver/msedgedriver"))
     else:
-        Exit(True, errorList[0])
+        exit_with_message(True, errorList[0])
 
     try:
         driver.get("https://at4.typewriter.at/index.php?r=site/index")
         driver.maximize_window()
         time.sleep(1)
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
     try:
         formLogin_un = driver.find_element(By.ID, "LoginForm_username")
         formLogin_pw = driver.find_element(By.ID, "LoginForm_pw")
         formLogin_submit = driver.find_element(By.NAME, "yt0")
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
     time.sleep(1)   
 
@@ -81,7 +74,7 @@ def NextLesson(driver):
         linkToLesson = driver.find_element(By.CLASS_NAME, "cockpitStartButton")
         linkToLesson.click()
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
 def DoExercise(driver):
     keyboardpy.press(Keys.ENTER)
@@ -90,7 +83,7 @@ def DoExercise(driver):
         box = driver.find_element(By.ID, "text_todo_1")
         currentChar = box.find_element(By.TAG_NAME, "span").text
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
     # remove checkbox
     keyboardpy.press(Keys.ENTER)
@@ -121,14 +114,14 @@ def GotoHomeScreen(driver):
         driver.get("https://at4.typewriter.at/index.php?r=user/overview")
         time.sleep(5)
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
 print("TypeWriterBot by Patrick Cerny, Github: https://github.com/patrickcerny\n")
 
 print("What browser do you use? (Firefox: F | Chrome: C | Edge: E)")
 answerBrowser = input().strip().lower()
 if answerBrowser not in ["f", "c", "e"]:
-    Exit(True, errorList[0])
+    exit_with_message(True, errorList[0])
 
 print("Do you want to log in and do your next exercise, or just do an exercise without login? (Login: L | Exercise: E)")
 answer = input().strip().lower()
@@ -137,14 +130,14 @@ print("What speed do you want to type in? (e.g., 300 => 300 chars/min)")
 try:
     answerSpeed = int(input().strip())
 except Exception as e:
-    Exit(True, str(e))
+    exit_with_message(True, str(e))
 
 if answer == "l":
     print("How many exercises do you want to do? (1 or more)")
     try:
         timesExercise = int(input().strip())
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
     driver = Login()
     for _ in range(timesExercise):
@@ -164,15 +157,15 @@ elif answer == "e":
         elif answerBrowser == "e":
             driver = webdriver.Edge(service=EdgeService("./driver/msedgedriver"))
         else:
-            Exit(True, errorList[0])
+            exit_with_message(True, errorList[0])
 
         driver.get(url)
         driver.maximize_window()
     except Exception as e:
-        Exit(True, str(e))
+        exit_with_message(True, str(e))
 
     DoExercise(driver)
 else:
-    Exit(True, errorList[0])
+    exit_with_message(True, errorList[0])
 
 print("Thank you for using my bot! If you have any feedback, please contact me on GitHub: https://github.com/patrickcerny")
