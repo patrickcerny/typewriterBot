@@ -20,9 +20,12 @@ The CLI is available as a module or console script.
 
 ### Run exercises after login
 
-Set the environment variables `TWB_USERNAME` and `TWB_PASSWORD` and run:
+Copy `.env.example` to `.env` and set your TypeWriter credentials, then load them and run:
 
 ```bash
+cp .env.example .env
+# edit .env to include your credentials
+export $(xargs < .env)
 python -m typewriterbot --browser c --speed 300 login --times 2
 ```
 
